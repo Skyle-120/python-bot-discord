@@ -1,4 +1,6 @@
 import discord
+import os
+import random
 from discord.ext import commands
 from bot_logic import gen_pass, flip_coin, gen_emodji
 
@@ -7,7 +9,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 # Creazione del bot con prefisso '$'
-bot = commands.Bot(command_prefix='$', intents=intents)
+bot = commands.Bot(command_prefix='/', intents=intents)
 
 @bot.event
 async def on_ready():
@@ -58,4 +60,13 @@ async def on_command_error(ctx, error):
 - Benvenuto: `$ciao`
 - Arrivederci: `$arrivederci`""")
 
-bot.run("MTU1OTI1Nzc5NTI0MzY3NTc2OA.GUMBEu.9MY7OcFF6bvWTSH7bxNHLDdoW5K1XCu0sloTT8")
+@bot.command()
+async def mem(ctx):
+    image_name = random.choice(os.listdir('images'))
+    with open(f'images/{image_name}', 'rb') as f:
+        # Memorizziamo il file della libreria di Discord convertito in questa variabile!
+        picture = discord.File(f)
+   # Possiamo quindi inviare questo file come parametro!
+    await ctx.send(file=picture)
+
+bot.run("MTU1OTI1Nzc5NTI0MzY3NTc2OA.GqL2sD.fepEyFT0mUosgjCHWeTMLAVlDvYLIWGAaLOiNE")
